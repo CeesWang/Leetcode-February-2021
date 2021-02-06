@@ -19,3 +19,25 @@ class Solution {
         return sb.length() == 0 ? "/" : sb.toString();
     }
 }
+
+class Solution {
+    public String simplifyPath(String path) {
+        String [] splitArr = path.split("/");
+        Stack<String> stack = new Stack<>();
+        for (String word : splitArr) {
+            if (!stack.isEmpty() && word.equals("..")) {
+                stack.pop();
+            }
+            else if (!word.equals("..") && !word.equals(".") && !word.equals("")) {
+                stack.push(word);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String s : stack) {
+            sb.append("/");
+            sb.append(s);
+        }
+        
+        return sb.length() == 0 ? "/" : sb.toString();
+    }
+}
