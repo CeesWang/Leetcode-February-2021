@@ -17,7 +17,7 @@ class Solution {
     public Node copyRandomList(Node head) {
         ArrayList<Node> list = new ArrayList<>();
         HashMap<Node, Integer> map = new HashMap<>();
-        HashMap<Node, Integer> forwardMap = new HashMap<>();
+        HashMap<Node, ArrayList<Integer>> forwardMap = new HashMap<>();
         int idx = 0;
         Node temp = head;
         while (temp != null) {
@@ -32,13 +32,22 @@ class Solution {
                     int i = map.get(temp.random);
                     n.random = list.get(i);
                 }
-                else {              
-                    forwardMap.put(temp.random, idx);
+                else {
+                    System.out.println(temp.random.val);
+                    if(forwardMap.containsKey(temp.random)) {
+                        forwardMap.get(temp.random).add(idx);
+                    }
+                    else {
+                        ArrayList<Integer> l = new ArrayList<>();
+                        l.add(idx);
+                        forwardMap.put(temp.random, l);
+                    }
                 }
             }
             if (forwardMap.containsKey(temp)) {
-                int i = forwardMap.get(temp);
-                list.get(i).random = n;
+                for (Integer i : forwardMap.get(temp)) {
+                    list.get(i).random = n;
+                }
             }
             temp = temp.next;
             idx++;
