@@ -6,7 +6,8 @@ class Solution {
         Queue<int []> queue = new LinkedList<>();
         boolean visited[][] = new boolean[len][len];
         if (grid[0][0] == 0) {
-            queue.add(new int [] {0,0});            
+            queue.add(new int [] {0,0});         
+            visited[0][0] = true;
         }
         while (!queue.isEmpty()) {
             int size = queue.size();
@@ -15,37 +16,44 @@ class Solution {
                 int [] coordinates = queue.poll();
                 int x = coordinates[0];
                 int y = coordinates[1];
-                visited[x][y] = true;
                 if (x + 1 <= len - 1) {
                     if (y - 1 >= 0 && !visited[x + 1][y - 1] && grid[x + 1][y - 1] == 0) {     // down left
                         queue.add(new int[]{x + 1, y - 1});
+                        visited[x + 1][y - 1] = true;
                     }
                     if (!visited[x + 1][y] && grid[x + 1][y] == 0) {                    // down
                         if (x + 1 == len - 1 && y == len - 1) return path + 1;
                         queue.add(new int[]{x + 1, y});
+                        visited[x + 1][y] = true;
                     }
                     if (y + 1 <= len - 1 && !visited[x + 1][y + 1] && grid[x + 1][y + 1] == 0) { // down right
                         if (x + 1 == len - 1 && y + 1 == len - 1) return path + 1;
                         queue.add(new int[] {x + 1, y + 1});
+                        visited[x + 1][y + 1] = true;
                     }
                 }
                 if (x - 1 >= 0 ) {
                     if (y - 1 >= 0 && !visited[x - 1][y - 1] && grid[x -1][y - 1] == 0) {     // top left
                         queue.add(new int[]{x - 1, y - 1});
+                        visited[x - 1][y - 1] = true;
                     }
                     if (!visited[x - 1][y] && grid[x-1][y] == 0) {   // top mid
                         queue.add(new int[]{x - 1, y});
+                        visited[x - 1][y] = true;   
                     }
                     if (y + 1 <= len - 1 && !visited[x - 1][y + 1] && grid[x - 1][y + 1] == 0) { // top right
                         queue.add(new int[] {x - 1, y + 1});
+                        visited[x - 1][y + 1] = true;
                     }
                 }
                 if (y - 1 >= 0 && !visited[x][y -1 ] && grid[x][y - 1] == 0) {      // left  
                     queue.add(new int [] {x, y - 1});
+                    visited[x][y - 1] = true;
                 }
-                if (y + 1 <= len - 1 && !visited[x][y + 1] && grid[x][y + 1] == 0) {
+                if (y + 1 <= len - 1 && !visited[x][y + 1] && grid[x][y + 1] == 0) {    // right
                     if (x == len - 1 && y + 1 == len - 1) return path + 1;
                     queue.add(new int[] {x, y + 1});
+                    visited[x][y + 1] = true;
                 }
             }
         }
