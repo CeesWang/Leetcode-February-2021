@@ -10,3 +10,23 @@ class Solution {
         return max;
     }
 }
+
+class Solution {
+    public int maxArea(int[] height) {
+        int max = 0;
+        int begin = 0;
+        int end = height.length - 1;
+        while (begin < end) {
+            int min = Math.min(height[begin], height[end]);
+            int diff = end - begin;
+            if (height[begin] < height[end]) {
+                begin++;
+            }
+            else {
+                end--;
+            }
+            max = Math.max(min * diff, max);
+        }
+        return max;
+    }
+}
