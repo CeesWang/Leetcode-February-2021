@@ -1,0 +1,32 @@
+class Solution {
+    public List<String> letterCasePermutation(String S) {
+        ArrayList<String> list = new ArrayList<>();
+        permutations(list, S, 0, );
+        return list;
+    }
+    public void permutations(List<String> list, String s, int idx, List<String> permutation) {
+        if (idx == s.length()) {
+        }
+        
+        for (int i = idx; i < s.length(); ++i) {
+            char c = s.charAt(i);
+            if (Character.isLetter(c)) {
+                permutation.add(Character.toString(c));
+                // permutations(list, s, i + 1, permutation);
+                permutation.remove(permutation.size() - 1);                
+                if (Character.isUpperCase(c)) {
+                    permutation.add(Character.toString(Character.toLowerCase(c)));
+                }
+                else {
+                    permutation.add(Character.toString(Character.toUpperCase(c)));
+                }
+                permutations(list, s, i + 1, permutation); 
+            }
+            else {
+                permutation.add(Character.toString(c));
+            }
+            System.out.println(permutation);
+            
+        }
+    }
+}
