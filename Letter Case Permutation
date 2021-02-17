@@ -1,32 +1,22 @@
 class Solution {
     public List<String> letterCasePermutation(String S) {
         ArrayList<String> list = new ArrayList<>();
-        permutations(list, S, 0, );
+        permutations(list, 0, S.toCharArray());
         return list;
     }
-    public void permutations(List<String> list, String s, int idx, List<String> permutation) {
-        if (idx == s.length()) {
+    public void permutations(List<String> list, int idx, char [] charArr) {
+        if (idx == charArr.length) {
+            list.add(new String(charArr));
+            return;
         }
-        
-        for (int i = idx; i < s.length(); ++i) {
-            char c = s.charAt(i);
-            if (Character.isLetter(c)) {
-                permutation.add(Character.toString(c));
-                // permutations(list, s, i + 1, permutation);
-                permutation.remove(permutation.size() - 1);                
-                if (Character.isUpperCase(c)) {
-                    permutation.add(Character.toString(Character.toLowerCase(c)));
-                }
-                else {
-                    permutation.add(Character.toString(Character.toUpperCase(c)));
-                }
-                permutations(list, s, i + 1, permutation); 
-            }
-            else {
-                permutation.add(Character.toString(c));
-            }
-            System.out.println(permutation);
-            
+        if (Character.isLetter(charArr[idx])) {
+            charArr[idx] = Character.toUpperCase(charArr[idx]);
+            permutations(list, idx + 1, charArr);
+            charArr[idx] = Character.toLowerCase(charArr[idx]);
+            permutations(list, idx + 1, charArr);
+        }
+        else {
+            permutations(list, idx + 1, charArr);
         }
     }
 }
