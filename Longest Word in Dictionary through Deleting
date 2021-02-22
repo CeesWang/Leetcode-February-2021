@@ -1,0 +1,31 @@
+class Solution {
+    public String findLongestWord(String s, List<String> d) {
+        String longest = "";
+        int [] countArr = new int [26];
+        Collections.sort(d);
+        for (char c : s.toCharArray()) {
+            countArr[c - 'a']++;    
+        }
+        
+        for (String word : d) {
+            int [] copyArr = countArr.clone();
+            boolean canMake = true;
+            for (char c : word.toCharArray()) {
+                int freq = copyArr[c - 'a'];
+                if (freq == 0) {
+                    canMake = false;
+                    break;
+                }
+                else {
+                    copyArr[c - 'a']--;
+                }
+            }
+            if(canMake) {
+                if (word.length() > longest.length()) {
+                    longest = word;
+                }
+            }
+        }
+        return longest;
+    }
+}
