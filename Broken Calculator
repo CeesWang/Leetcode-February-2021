@@ -26,3 +26,20 @@ class Solution {
         return min;
     }
 }
+
+class Solution {
+    public int brokenCalc(int X, int Y) {
+        if (X >= Y) return X - Y;
+        int min = 0;
+        while (Y > X) {
+            min++;
+            if (Y % 2 == 0) {
+                Y /= 2;
+            }
+            else {
+                Y += 1;
+            }
+        }
+        return min + X - Y;
+    }
+}
