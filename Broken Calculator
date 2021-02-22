@@ -1,0 +1,28 @@
+class Solution {
+    public int brokenCalc(int X, int Y) {
+        if (X >= Y) {
+            return X - Y;
+        }
+        int min = 0;
+        Set<Integer> visitedSet = new HashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
+        queue.add(X);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            min++;
+            for (int i = 0; i < size; ++i) {
+                int num = queue.poll();
+                int d = num * 2;
+                visitedSet.add(num);
+                if (Y == d || num - 1 == Y) return min;
+                if (!visitedSet.contains(d)) {
+                    queue.add(d);    
+                }
+                if (!visitedSet.contains(num - 1)) {
+                    queue.add(num - 1);
+                }                
+            }            
+        }
+        return min;
+    }
+}
