@@ -55,7 +55,6 @@ class Solution {
                 }
             }
         }
-        if (stack.size() == 1) return stack.pop();
         int temp = 0;
         while (!stack.isEmpty()) {
             temp += stack.pop();
