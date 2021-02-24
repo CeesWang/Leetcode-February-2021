@@ -1,0 +1,33 @@
+class Solution {
+    public int scoreOfParentheses(String S) {
+        Stack<String> stack = new Stack();
+        for (char c : S.toCharArray()) {
+            if (c == '(') {
+                stack.add(Character.toString(c));
+            }
+            else {      // )
+                if (stack.peek().equals("(")) {
+                    stack.pop();
+                    stack.add("1");
+                }   
+                else {  // is a number
+                    int temp = Integer.parseInt(stack.pop());
+                    while (!stack.peek().equals("(")) {
+                        temp += Integer.parseInt(stack.pop());
+                    }
+                    temp *= 2;
+                    stack.pop();
+                    stack.add(Integer.toString(temp));
+                }
+            }
+        }
+        if (stack.size() == 1) return Integer.parseInt(stack.pop());
+        int temp = 0;
+        while (!stack.isEmpty()) {
+            temp += Integer.parseInt(stack.pop());
+        }        
+        return temp;
+    }
+}
+// "(()(()))"
+// "(1(1))"
