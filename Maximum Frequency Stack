@@ -1,0 +1,70 @@
+class FreqStack {
+    PriorityQueue<FreqInteger> pq;
+    Map<Integer, FreqInteger> map;
+    int uniq;
+    public FreqStack() {
+        pq = new PriorityQueue<>((a,b) -> b.freq - a.freq == 0 ? b.uniq - a.uniq : b.freq - a.freq);
+        map = new HashMap<>();
+        uniq = 1;
+    }
+    
+    public void push(int x) {
+        FreqInteger fi = new FreqInteger(x, 1);
+        if (map.containsKey(x)) {
+            int freq = map.get(x).freq;
+            int uniq = map.get(x).uniq;
+            pq.remove(map.get(x));
+            fi.setFreq(freq  + 1);
+            fi.setUniq(uniq);
+        }
+        else {
+            fi.setUniq(uniq++);
+        }
+        map.put(x, fi);
+        pq.add(fi);
+        // System.out.println(pq.size() + " " + pq.peek().num + " " + pq.peek().freq);
+    }
+    
+    public int pop() {
+        FreqInteger fi = pq.poll();
+        if (fi.freq > 1) {
+            pq.remove(fi);
+            pq.add(new FreqInteger(fi.num, fi.freq - 1, fi.uniq));
+        }
+        else {
+            map.remove(fi);
+        }
+        return fi.num;
+    }
+}
+
+class FreqInteger {
+    int num;
+    int freq;
+    int uniq;
+    public FreqInteger(int num, int freq) {
+        this.num = num;
+        this.freq = freq;
+    }
+    
+    public FreqInteger(int num, int freq, int uniq) {
+        this.num = num;
+        this.freq = freq;
+        this.uniq = uniq;
+    }
+    
+    public void setFreq(int freq) {
+        this.freq = freq;
+    }
+    public void setUniq(int uniq) {
+        this.uniq = uniq;
+    }
+    
+}
+
+/**
+ * Your FreqStack object will be instantiated and called as such:
+ * FreqStack obj = new FreqStack();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ */
